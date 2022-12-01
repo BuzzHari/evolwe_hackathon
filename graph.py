@@ -86,12 +86,12 @@ class Graph:
                 ]
             },
             'isOrgazizerOptional': 'false',
-            'meetingDruation': 'PT1H',
+            'meetingDuration': 'PT1H',
             'returnSuggestionReasons': 'true',
         }   
 
         request_url = '/me/findMeetingTimes'
-        preference = "outlooktimezone='India Standard Time'"
+        preference = "outlook.timezone=\"India Standard Time\""
         cal_response = self.user_client.post(request_url,
                              data=json.dumps(request_body),
                              headers={'Prefer': preference, 'Content-Type': 'application/json'})

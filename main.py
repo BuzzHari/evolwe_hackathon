@@ -27,9 +27,11 @@ def get_free_time(graph: Graph):
     user_email = 'ashish-christopher.victor@hpe.com'
 
     suggested_times = graph.get_free_time(user_name, user_email)
-    for timeSuggestion in suggested_times['meetingTimeSuggestions']: 
-        print('Meeting Time slot: ', timeSuggestion['meetingTimeSlot']['start']['dateTime'], ' - ' , timeSuggestion['meetingTimeSlot']['end']['dateTime'], 'timezone:',
-                timeSuggestion['meetingTimeSlot']['start']['timeZone'], '\n')
+
+    print(suggested_times)
+    #for timeSuggestion in suggested_times['meetingTimeSuggestions']: 
+    #    print('Meeting Time slot: ', timeSuggestion['meetingTimeSlot']['start']['dateTime'], ' - ' , timeSuggestion['meetingTimeSlot']['end']['dateTime'], 'timezone:',
+    #            timeSuggestion['meetingTimeSlot']['start']['timeZone'], '\n')
     return 1
 
 
@@ -64,7 +66,7 @@ def main():
         elif choice == 1:
             display_access_token(graph)
         elif choice == 2:
-            list_inbox(graph)
+            send_mail(graph)
         elif choice == 3:
             get_free_time(graph)
         else:
