@@ -20,3 +20,9 @@ The implementation of adding intelligence to automatically decide when a meeting
 
 * `python3 main.py`.
 * `follow on screen instructions`.
+
+## Screenshots
+
+
+![image](https://user-images.githubusercontent.com/35808993/204996871-3aa97191-88d8-49a7-8a76-801ad89e0fce.png)
+![image](https://user-images.githubusercontent.com/35808993/204997048-3e510ab5-dc08-414f-b09b-7a239af73e0c.png)
