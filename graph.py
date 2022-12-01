@@ -33,6 +33,14 @@ class Graph:
         user_response = self.user_client.get(request_url)
         return user_response.json()
 
+    def get_any_user(self, user_mail): 
+        endpoint = '/users/' + user_mail
+        select = 'displayName,mail,userPrincipalName'
+        request_url = f'{endpoint}?$select={select}'
+
+        user_response = self.user_client.get(request_url)
+        return user_response.json()
+
     def send_mail(self, subject: str, body: str, recipient: str):
         request_body = {
             'message': {
@@ -74,11 +82,11 @@ class Graph:
                 'timeSlots': [
                     {
                         'start': {
-                            'dateTime': '2022-11-30T09:00:00',
+                            'dateTime': '2022-12-02T09:00:00',
                             'timeZone': 'India Standard Time' 
                         },
                         'end': {
-                            'dateTime': '2022-11-30T17:00:00',
+                            'dateTime': '2022-12-02T17:00:00',
                             'timeZone': 'India Standard Time'
 
                         }
@@ -92,7 +100,47 @@ class Graph:
 
         request_url = '/me/findMeetingTimes'
         preference = "outlook.timezone=\"India Standard Time\""
-        cal_response = self.user_client.post(request_url,
+        response = self.user_client.post(request_url,
                              data=json.dumps(request_body),
                              headers={'Prefer': preference, 'Content-Type': 'application/json'})
-        return cal_response.json()
+        return response.json()
+    
+    def schedule_meeting(self, user, recipient, start_time, end_time):
+        request_body = {
+            "subject": user['displayName'] + " - " + recipient['displayName'] + " 1 - 1",
+            "body": {
+            "contentType": "HTML",
+            "content": "Does this time work for you?"
+            },
+            "start": {
+              "dateTime": start_time,
+              "timeZone": "India Standard Time"
+            },
+            "end": {
+              "dateTime": end_time,
+              "timeZone": "India Standard Time"
+            },
+            "location":{
+              "displayName":"Microsoft teams"
+            },
+            "attendees": [
+            {
+              "emailAddress": {
+                "address": recipient['mail'],
+                "name": recipient['displayName'] 
+              },
+              "type": "required"
+            }
+            ],
+            "allowNewTimeProposals": "true",
+            "isOnlineMeeting": "true",
+            "onlineMeetingProvider": "teamsForBusiness"
+        }
+
+
+        request_url = '/me/events'
+        preference = "outlook.timezone=\"India Standard Time\""
+        response = self.user_client.post(request_url,
+                             data=json.dumps(request_body),
+                             headers={'Prefer': preference, 'Content-Type': 'application/json'})
+        return response.json()
